@@ -1,0 +1,24 @@
+
+local ue = CS.UnityEngine
+
+Item = {
+	Awake = function (data)
+		data.button:GetComponent("Button").onClick:AddListener(function()
+			Panel.SelectItem(data.panel, data._num)
+		end)
+	end;
+
+	Init = function (data, panel, num)
+		data.panel = panel
+		Item.Update(data, num)
+	end;
+
+	Update = function (data, num)
+		data._num = num
+		data.num:GetComponent("Text").text = num
+	end;
+
+	SetLight = function (data, light)
+		data.light:SetActive(light)
+	end;
+}
