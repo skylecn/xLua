@@ -11,9 +11,9 @@ public class FuncLuaBehavior : MonoBehaviour {
 
     internal static LuaEnv luaEnv = new LuaEnv(); //all lua behaviour shared one luaenv only!
 
-    LuaTable dataTable;
+    LuaTable dataTable; // lua数据，包括C#的userdata和lua自定义的数据
 
-    LuaTable funcTable;
+    LuaTable funcTable; // lua实现的事件响应函数和功能函数
 
     public LuaTable luaData
     {
