@@ -11,9 +11,9 @@ public class FuncLuaBehavior : MonoBehaviour {
 
     internal static LuaEnv luaEnv = new LuaEnv(); //all lua behaviour shared one luaenv only!
 
-    LuaTable dataTable; // lua数据，包括C#的userdata和lua自定义的数据
+    LuaTable dataTable; // Lua table，包括C#创建的和Lua中创建的数据
 
-    LuaTable funcTable; // lua实现的事件响应函数和功能函数
+    LuaTable funcTable; // Lua实现的事件响应函数和功能函数
 
     public LuaTable luaData
     {
@@ -22,16 +22,19 @@ public class FuncLuaBehavior : MonoBehaviour {
 
     void Awake()
     {
+        //加载Lua文件
         luaEnv.DoString(string.Format("require '{0}'", luaFile ));
 
-
+        //定义dataTable
         dataTable = luaEnv.NewTable();
+        //插入需要处理的UI组件到dataTable中
         dataTable.Set("gameObject", gameObject);
         foreach (var injection in injections)
         {
             dataTable.Set(injection.name, injection.value);
         }
 
+        //获取lua文件中函数table的引用
         funcTable = luaEnv.Global.Get<LuaTable>(luaFile);
         if (funcTable != null)
         {
